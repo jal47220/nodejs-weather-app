@@ -1,0 +1,20 @@
+{
+    "name": "nodejs-weather-app",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "ts-node-dev --respawn src/app.ts",
+        "start": "node dist/index.js",
+        "build": "tsc -p tsconfig.json --pretty",
+        "inst_node": "npm i @types/node --save-dev; npm i node",
+        "install": "npm i chalk@4.1.2; npm run inst_node"
+    },
+    "authors": "Joshua Loftin",
+    "dependencies": {
+        "chalk": "^4.1.2",
+        "node": "^17.7.2"
+    },
+    "devDependencies": {
+        "@types/node": "^17.0.42"
+    }
+}
