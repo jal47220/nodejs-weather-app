@@ -7,14 +7,16 @@
         "start": "node dist/index.js",
         "build": "tsc -p tsconfig.json --pretty",
         "inst_node": "npm i @types/node --save-dev; npm i node",
-        "install": "npm i chalk@4.1.2; npm run inst_node"
+        "inst_request": "npm i @types/request --save-dev; npm i request",
+        "install": "npm run inst_node; npm run inst_request"
     },
     "authors": "Joshua Loftin",
     "dependencies": {
-        "chalk": "^4.1.2",
-        "node": "^17.7.2"
+        "node": "^17.7.2",
+        "request": "^2.88.2"
     },
     "devDependencies": {
-        "@types/node": "^17.0.42"
+        "@types/node": "^17.0.42",
+        "@types/request": "^2.48.8"
     }
 }
