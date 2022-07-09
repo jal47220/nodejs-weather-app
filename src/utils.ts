@@ -8,8 +8,6 @@ export const geocode = (address: string, callback: Function) => {
     const mbApiUrl = generateMBApiUrl(encodeURIComponent(address), keys.ACCESS_KEY_MB);
  
     request({ url: mbApiUrl, json: true}, (error, response) => {
-        console.log(''); // Line separator
-    
         if (error) { callback('Unable to connect to mapbox service.', undefined); } 
         else if (response.body.features.length === 0) { callback('Unable to find location.', undefined); }
         else if (response.body.message) { callback(`Service response: ${response.body.message}`, undefined); }

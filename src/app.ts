@@ -1,4 +1,5 @@
-import { geocode, forecast } from './utils';
+import promptSync from 'prompt-sync';
+import * as utils from './utils';
 
 type Coordinates = {
     latitude: number,
@@ -14,17 +15,22 @@ type WeatherStackObject = {
     weatherDescriptions: string[], 
     actualTemp: number,
     feelsLikeTemp: number
-}
+} 
 
-const location = 'Los Angeles';
+console.log(''); // Line separator
 
-geocode(location, (mapBoxError: string, mapBoxData: MapBoxObject) => {
+const prompt = promptSync();
+const location = prompt('Please enter a location: ');
+
+console.log(''); // Line separator
+
+utils.geocode(location, (mapBoxError: string, mapBoxData: MapBoxObject) => {
     if (mapBoxError) { return console.log('MapBox error: ', mapBoxError); }
     
     console.log(`${mapBoxData.coordinates.latitude}, ${mapBoxData.coordinates.longitude}`);
     console.log(mapBoxData.location); 
 
-    forecast(mapBoxData.coordinates.latitude, mapBoxData.coordinates.longitude, (weatherStackError: string, weatherStackData: WeatherStackObject) => {
+    utils.forecast(mapBoxData.coordinates.latitude, mapBoxData.coordinates.longitude, (weatherStackError: string, weatherStackData: WeatherStackObject) => {
         if (weatherStackError) { return console.log('WeatherStack error: ', weatherStackError); }
 
         for (const description of weatherStackData.weatherDescriptions){ console.log(`${description}. `); }
