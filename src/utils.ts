@@ -15,8 +15,10 @@ export const geocode = (address: string, callback: Function) => {
         else if (response.body.message) { callback(`Service response: ${response.body.message}`, undefined); }
         else {
             callback(undefined, {
-                latitude: response.body.features[0].center[1],
-                longitude: response.body.features[0].center[0],
+                coordinates: {
+                    latitude: response.body.features[0].center[1],
+                    longitude: response.body.features[0].center[0]
+                },
                 location: response.body.features[0].place_name
             });
         }
@@ -27,8 +29,6 @@ export const forecast =  (latitude: number, longitude: number, callback: Functio
     const wsApiUrl = generateWSApiUrl(keys.ACCESS_KEY_WS, latitude, longitude);
 
     request({ url: wsApiUrl, json: true }, (error, response) => {
-        console.log(''); // Line separator
-
         if (error) { callback('Unable to connect to weatherstack service.', undefined); } 
         else if (response.body.error) { callback(`Service response: ${response.body.error.info}`, undefined); }
         else {

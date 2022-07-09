@@ -1,18 +1,33 @@
 import { geocode, forecast } from './utils';
 
+type Coordinates = {
+    latitude: number,
+    longitude: number
+}
+
+type MapBoxObject = {
+    coordinates: Coordinates,
+    location: string
+}
+
+type WeatherStackObject = {
+    weatherDescriptions: string[], 
+    actualTemp: number,
+    feelsLikeTemp: number
+}
+
 const location = 'Los Angeles';
 
-geocode(location, (error: string, data: boolean) => {
-    if (error) { console.log('MapBox error: ', error); }
-    else if (data) { console.log('MapBox data: ', data); }
-    else { console.log('Unknown error retrieving Mapbox data'); }
-})
+geocode(location, (mapBoxError: string, mapBoxData: MapBoxObject) => {
+    if (mapBoxError) { return console.log('MapBox error: ', mapBoxError); }
+    
+    console.log(`${mapBoxData.coordinates.latitude}, ${mapBoxData.coordinates.longitude}`);
+    console.log(mapBoxData.location); 
 
-forecast(34.05, -118.24, (error: string, data: boolean) => {
-    if (error) { console.log('WeatherStack error: ', error); }
-    else if (data) { console.log('WeatherStack data: ', data); }
-    else { console.log('Unknown error retrieving WeatherStack data'); }
-})
+    forecast(mapBoxData.coordinates.latitude, mapBoxData.coordinates.longitude, (weatherStackError: string, weatherStackData: WeatherStackObject) => {
+        if (weatherStackError) { return console.log('WeatherStack error: ', weatherStackError); }
 
-//for (const description of weatherDescriptions){ console.log(`${description}. `); }
-//console.log(`It is currently ${actualTemp} degrees F. It feels like ${feelsLikeTemp} degrees F.`);
+        for (const description of weatherStackData.weatherDescriptions){ console.log(`${description}. `); }
+        console.log(`It is currently ${weatherStackData.actualTemp} degrees F. It feels like ${weatherStackData.feelsLikeTemp} degrees F.`);
+    });
+});
