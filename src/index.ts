@@ -22,6 +22,8 @@ app.get('/weather', (req, res) => {
                 return res.send({
                     error: weatherStackError,
                     detectedLocation: mapBoxData.detectedLocation,
+                    latitude: mapBoxData.coordinates.latitude, 
+                    longitude: mapBoxData.coordinates.longitude,
                     searchedLocation: searchedLocation
                 });
             }
@@ -29,10 +31,12 @@ app.get('/weather', (req, res) => {
             return res.send({
                 forecast: weatherStackData.weatherDescriptions,
                 detectedLocation: mapBoxData.detectedLocation,
-                searchedLocation
+                latitude: mapBoxData.coordinates.latitude, 
+                longitude: mapBoxData.coordinates.longitude,
+                searchedLocation: searchedLocation
             });
         });
     });
 });
 
-app.listen(port, () => { console.log(`[server]: Server is running at https://localhost:${port}`) });
+app.listen(port, () => { console.log(`Server is running at https://localhost:${port}`) });
